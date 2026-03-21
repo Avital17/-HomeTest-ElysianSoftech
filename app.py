@@ -1,11 +1,12 @@
 import os
-from flask import Flask
+from flask import Flask, request, jsonify
 from pymongo import MongoClient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-
-MONGO = os.environ.get("MONGO")
+MONGO = os.environ.get("Mongo")
 client = MongoClient(MONGO)
 #db = client.get_database("Cluster0")
 

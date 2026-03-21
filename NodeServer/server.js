@@ -20,9 +20,10 @@ app.get('/get-message', async (req, res) => {
             {
                 model: 'gpt-3.5-turbo',
                 messages: [
-                    { role: "user", content: "message for a new user" }
+                    { role: "user", content: "Give me a random welcome message" }
                 ],
-                max_tokens: 5
+                max_tokens: 20,
+                temperature: 0.9 //Creativity
             },
             {
                 headers: {
@@ -31,10 +32,10 @@ app.get('/get-message', async (req, res) => {
                 }
             }
         );
-
+        //console.log("hi");
         const message = response.data.choices[0].message.content;
 
-        res.json({ Message: message });
+        res.json({ toastMessage: message });
 
     } catch (error) {
         console.error("Error connecting:", error.message);

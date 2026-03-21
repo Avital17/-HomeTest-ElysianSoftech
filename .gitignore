@@ -9,4 +9,4 @@ yarn-error.log*
 __pycache__/
 *.py[cod]
 
-/App
+/app.py
