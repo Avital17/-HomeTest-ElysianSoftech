@@ -1,0 +1,34 @@
+[
+  {
+    "customer_name": "ישראלי ישראלי",
+    "phone": "0501235684",
+    "delivery_number": "1001",
+    "category": "אלקטרוניקה",
+    "status": "חבילה נשלחה",
+    "products": ["אוזניות אלחוטיות", "מטען מהיר"]
+  },
+  {
+    "customer_name": "אביטל ציקוטה",
+    "phone": "0502340839",
+    "delivery_number": "1002",
+    "category": "טיפוח",
+    "status": "החבילה הגיעה ליעד",
+    "products": ["קרם פנים", "סבון גוף"]
+  },
+  {
+    "customer_name": "מיכל כהן",
+    "phone": "0549876543",
+    "delivery_number": "1003",
+    "category": "בית ומטבח",
+    "status": "חבילה בהכנה",
+    "products": ["סט סכינים", "קרש חיתוך"]
+  },
+  {
+    "customer_name": "דוד לוי",
+    "phone": "0501112233",
+    "delivery_number": "1004",
+    "category": "צעצועים",
+    "status": "החבילה התקבלה",
+    "products": ["סט לגו", "מכונית שלט"]
+  }
+]
