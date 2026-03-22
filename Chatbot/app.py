@@ -10,7 +10,7 @@ from openai import OpenAI
 app = Flask(__name__)
 CORS(app)
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="YOURֹ_API_KEY")
 
 EXCEL_FILE = "logs.xlsx"
 DATA_FILE = "deliveries.json"
