@@ -5,7 +5,7 @@ import {
   Image, SafeAreaView, ScrollView, Dimensions 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 
 export default function LoginScreen() {
   const [show, setShow] = useState(false);
@@ -14,39 +14,54 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const logo = require('../../assets/images/photo3.png');
 
-  const handleLogin = async () => {
-  setIsLoading(true);
 
+ const universalAlert = (title, message) => {
+  if (Platform.OS === 'web') {
+    const text = message ? `${title}: ${message}` : title;
+    window.alert(text);
+  } else {
+    Alert.alert(title, message);
+  }
+};
+
+const handleLogin = async () => {
+  console.log("Button clicked!"); 
+  setIsLoading(true);
+  
   try {
+    //console.log("Sending request to Python server...");
     const Response_Py = await axios.post('https://myserver-ckaceug6c8h2cqdy.israelcentral-01.azurewebsites.net/login', {
       email: email,
       password: password
     });
-    //Alert.alert("OK");
-    if (Response_Py.data.success === true) {
-      //Alert.alert("OK2");
-      const Response_node = await axios.get('http://192.168.1.35:5000/get-message');
-      //Alert.alert("success");
-      const Msg = Response_node.data.toastMessage || Response_node.data.Message;
-      
-      Alert.alert(Msg);
-
-    } else {
-      Alert.alert("Error", "Mail or the Password is not correct!");
-    }
-
-  } catch (error) {
-    console.error("Error Details:", error.response?.data || error.message);
-    const errorMessage = error.response?.data?.message || "Server Error (500)";
-    Alert.alert("System Error", errorMessage);
     
+    //console.log("Python Server Response:", Response_Py.data);
+
+    if (Response_Py.data.success === true) {
+      console.log("Success! Fetching message from Node server...");
+      
+      const Response_node = await axios.get('http://192.168.1.35:5000/get-message');
+      
+      const Msg = Response_node.data.toastMessage || Response_node.data.Message;
+      universalAlert("הודעה", Msg);
+    } else {
+      universalAlert("שגיאה", "אימייל או סיסמה לא נכונים!");
+    }
+  } catch (error) {
+    console.error("Full Error Details:", error);
+    if (error.response) {
+       universalAlert("שגיאה מהשרת", `קוד: ${error.response.status}`);
+       
+    } else if (error.request) {
+       universalAlert("שגיאת רשת", "לא ניתן להתחבר לשרת. וודאי שאת מחוברת לאינטרנט ושהשרת עובד.");
+    } else {
+       universalAlert("שגיאה", error.message);
+    }
   } finally {
     setIsLoading(false);
-    console.log("finished.");
   }
+
 };
-
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
